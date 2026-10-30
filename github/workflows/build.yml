@@ -1,0 +1,16 @@
+name: Crear aplicaciones
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyinstaller pygame
+      - run: pyinstaller --noconfirm --clean --onefile --windowed --name TKD01 --add-data "tkd01_logo.jpg;." --add-data "tkd01_star.png;." --add-data "tv_splash.jpg;." --add-data "tkd01_pc.py;." tkd01_pc.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TKD01-windows
+          path: dist/*
